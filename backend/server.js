@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT;
 const hotelDataAddedToDBRouter = require("./routes/dataimport.router.js");
 const categoryDataAddedToDBRouter = require("./routes/categoryimport.router.js");
 
