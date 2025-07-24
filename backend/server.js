@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const PORT = process.env.PORT;
+// const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
+
 const hotelDataAddedToDBRouter = require("./routes/dataimport.router.js");
 const categoryDataAddedToDBRouter = require("./routes/categoryimport.router.js");
 
@@ -22,6 +24,11 @@ connectDB();
 app.get("/", (req,res)=>{
     res.send("This is the home page of breeze travel !!");
 })
+
+app.get("/health", (req, res) => {
+    res.status(200).send("OK");
+});
+
 
 app.use("/api/hotels", hotelRouter);    //To get/retrieve hotels
 app.use("/api/categories", categoryRouter);    //To get/retrieve categories

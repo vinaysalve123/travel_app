@@ -10,13 +10,18 @@ if (!MONGOATLASURL) {
 
 const connectDB = async()=>{
     try{
-        await mongoose.connect(MONGOATLASURL)
-                .then(()=>console.log("Connected to mongodb Atlas !!"))
-                .catch(err=>console.log(err))
+    //     await mongoose.connect(MONGOATLASURL)
+    //             .then(()=>console.log("Connected to mongodb Atlas !!"))
+    //             .catch(err=>console.log(err))
+        await mongoose.connect(MONGOATLASURL);
+        console.log("Connected to MongoDB Atlas!!");
     }
     catch(err){
         console.log(err)
     }
+
+    
+
 } 
 
 module.exports = connectDB;
