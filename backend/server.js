@@ -38,10 +38,10 @@ app.use("/api/hotels", singleHotelRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/wishlist", wishlistRouter);
 
-// app.listen(PORT, ()=>{
-//     console.log("Server is UP and Running !!");
-// })
+app.listen(PORT, ()=>{
+    console.log(`Server is UP and Running on PORT ${PORT} !!`);
+})
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server is UP and Running on PORT ${PORT}!!`);
-});
+// app.listen(PORT, '0.0.0.0', () => {
+//     console.log(`Server is UP and Running on PORT ${PORT}!!`);
+// });
