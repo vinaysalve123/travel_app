@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
+const cors = require("cors");
 
 // const PORT = process.env.PORT;
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,7 @@ const wishlistRouter = require("./routes/wishlist.router.js");
 
 const connectDB = require("./config/dbconfig.js");
 
+app.use(cors());
 app.use(express.json());
 connectDB();
 
