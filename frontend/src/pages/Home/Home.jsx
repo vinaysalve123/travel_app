@@ -6,6 +6,8 @@ import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component"
 import Categories from '../../components/Categories/Categories';
 import { useCategory } from '../../context/category-context';
+import { useDate } from '../../context/date-context';
+import SearchStayWithDate from '../../components/SearchStayWithDate/SearchStayWithDate';
 
 const Home = () => {
 
@@ -13,12 +15,15 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(16);
   const [testData, setTestData] = useState([]);
   const [hotels, setHotels] = useState([]);
+
   const {hotelCategory} = useCategory();
+  const {isSearchModalOpen} = useDate();
 
   useEffect(()=>{
     (async()=>{
       try{
         const {data} = await axios.get(`https://travel-app-onjk.onrender.com/api/hotels?category=${hotelCategory}`)
+        // console.log("Hotels fetched:", data);
         setTestData(data);
         setHotels(data ? data.slice(0,16) : []);
       }
@@ -46,30 +51,33 @@ const Home = () => {
   
 
   return (
-    <>
+    <div className='relative'>
       <Navbar />
       <Categories />
       
-        {
-          hotels && hotels.length>0 ? (
-            <InfiniteScroll 
-              dataLength={hotels.length}
-              next={fetchMoreData}
-              hasMore={hasMore}
-              loader={hotels.length>0 && <h3 className="alert-text">Loading...</h3>}
-              endMessage={<p className="alert-text">You have seen it all !!</p>}
-            >
-              <main className='main d-flex align-center wrap gap-larger'>
-                {
-                  hotels && hotels.map((hotel)=> <HotelCard key={hotel._id} hotel={hotel} />)
-                }
-              </main>
-            </InfiniteScroll>
-          )
-          :
-          (<></>)
-        }
-    </>
+      {
+        hotels && hotels.length>0 ? (
+          <InfiniteScroll 
+            dataLength={hotels.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={hotels.length>0 && <h3 className="alert-text">Loading...</h3>}
+            endMessage={<p className="alert-text">You have seen it all !!</p>}
+          >
+            <main className='main d-flex align-center wrap gap-larger'>
+              {
+                hotels && hotels.map((hotel)=> <HotelCard key={hotel._id} hotel={hotel} />)
+              }
+            </main>
+          </InfiniteScroll>
+        )
+        :
+        (<></>)
+      }
+      {
+        isSearchModalOpen && <SearchStayWithDate />
+      }
+    </div>
   )
 }
 
