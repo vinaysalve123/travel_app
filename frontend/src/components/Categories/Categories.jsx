@@ -4,31 +4,33 @@ import "./Categories.css";
 import {useCategory} from "../../context/category-context.jsx";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { useFilter } from "../../context/filter-context.jsx";
 
-const responsive = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 1024 },
-    items: 9,
-  },
-  desktop: {
-    breakpoint: { max: 1024, min: 768 },
-    items: 6,
-  },
-  tablet: {
-    breakpoint: { max: 768, min: 464 },
-    items: 4,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 2,
-  }
-};
+// const responsive = {
+//   superLargeDesktop: {
+//     breakpoint: { max: 4000, min: 1024 },
+//     items: 9,
+//   },
+//   desktop: {
+//     breakpoint: { max: 1024, min: 768 },
+//     items: 6,
+//   },
+//   tablet: {
+//     breakpoint: { max: 768, min: 464 },
+//     items: 4,
+//   },
+//   mobile: {
+//     breakpoint: { max: 464, min: 0 },
+//     items: 2,
+//   }
+// };
 
 const Categories=()=>{
 
     const [categories, setCategories] = useState([]);
     const [numberOfCategoryToShow, sestNumberOfCategoryToShow] = useState(0);
     const {hotelCategory, setHotelCategory} = useCategory();
+    const {filterDispatch} = useFilter();
 
     const handleRightButtonClick=()=>{
         sestNumberOfCategoryToShow(prev=>prev+10);
@@ -41,7 +43,13 @@ const Categories=()=>{
         // console.log(category);
         setHotelCategory(category);
     }
-    console.log(hotelCategory);
+    // console.log(hotelCategory);
+
+    const handleFilterClick=()=>{
+        filterDispatch({
+            type:"SHOW_FILTER_MODAL",
+        })
+    }
 
     useEffect(()=>{
         (async()=>{
@@ -88,6 +96,11 @@ const Categories=()=>{
                     ))
                 }
                 </Carousel> */}
+
+                <button className="button btn-filter d-flex align-center gap-small cursor-pointer fixed" onClick={handleFilterClick}>
+                    <span className="material-icons-outlined">filter_alt</span>
+                    <span>Filter</span>
+                </button>
             </section>
         </>
     )

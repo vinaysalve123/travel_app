@@ -33,7 +33,7 @@
 }
 
 .btn-right{
-    right: 7rem;
+    right: 10rem;
 }
 
 .rec.rec-swipable{
@@ -61,6 +61,8 @@
 }
 
 .button.btn-filter {
+  top: 5.5rem;
+  right: 2rem;
   padding: 8px 1rem;
   border-radius: 2rem;
   border: 1px solid var(--accent-color);
