@@ -52,3 +52,7 @@
 .favorite{
     color: #71717a;
 }
+
+.fav-selected{
+    color: rgb(255, 0, 0);
+}

@@ -4,6 +4,7 @@ import './App.css'
 import Home from "./pages/Home/Home"
 import SingleHotel from './pages/SingleHotel/SingleHotel'
 import SearhResults from './pages/SearchResults/SearchResults'
+import Wishlist from './pages/Wishlist/Wishlist'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path='/' element = {<Home />}/>
         <Route path='/hotels/:name/:address/:id/reserve' element = {<SingleHotel />}/>
         <Route path="/hotels/:address" element={<SearhResults />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
       
     </>
