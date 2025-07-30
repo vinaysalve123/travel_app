@@ -15,6 +15,8 @@ import getHotelsByRoomAndBeds from '../../utils/room-beds';
 import getHotelsByPropertyType from '../../utils/property-type';
 import getHotelsByRatings from '../../utils/rating';
 import getHotelsByCancellation from '../../utils/hotel-cancellable';
+import { useAuth } from '../../context/auth-context';
+import AuthModal from '../../components/AuthModal/AuthModal';
 
 const Home = () => {
 
@@ -26,6 +28,7 @@ const Home = () => {
   const {hotelCategory} = useCategory();
   const {isSearchModalOpen} = useDate();
   const {isFilterModalOpen, priceRange, noOfBathrooms, noOfBedrooms, noOfBeds, propertyType, travelOpRating, isCancellable} = useFilter();
+  const {isAuthModalOpen} = useAuth();
 
   useEffect(()=>{
     (async()=>{
@@ -92,6 +95,9 @@ const Home = () => {
       }
       {
         isFilterModalOpen && <Filter />
+      }
+      {
+        isAuthModalOpen && <AuthModal />
       }
     </div>
   )
