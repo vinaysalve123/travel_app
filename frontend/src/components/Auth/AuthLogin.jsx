@@ -50,40 +50,63 @@ const AuthLogin=()=>{
     const handleFormSubmit= async(event)=>{
         event.preventDefault();
 
-        if(isNumberValid && isPasswordValid){
-            try{
-                const {accessToken, username} = await loginHandler(number, password, setAlert, authDispatch);
-                console.log(accessToken, username);
+    //     if(isNumberValid && isPasswordValid){
+    //         try{
+    //             const {accessToken, username} = await loginHandler(number, password, setAlert, authDispatch);
+    //             console.log(accessToken, username);
                 
-                // authDispatch({
-                //     type:"SET_ACCESS_TOKEN",
-                //     payload: accessToken
-                // })
-                // authDispatch({
-                //     type:"SET_USERNAME",
-                //     payload: username
-                // })
+    //             // authDispatch({
+    //             //     type:"SET_ACCESS_TOKEN",
+    //             //     payload: accessToken
+    //             // })
+    //             // authDispatch({
+    //             //     type:"SET_USERNAME",
+    //             //     payload: username
+    //             // })
 
-                // authDispatch({
-                //     type: "SHOW_AUTH_MODAL"
-                // })
+    //             // authDispatch({
+    //             //     type: "SHOW_AUTH_MODAL"
+    //             // })
 
-                
-                // Modal now closes explicitly after state updates
-                authDispatch({ type: "CLOSE_AUTH_MODAL" });
 
-            }catch(err){
-                alert("Login failed. Try again.");
-                console.error("Login error:", err);
+    //             // Modal now closes explicitly after state updates
+    //             authDispatch({ type: "CLOSE_AUTH_MODAL" });
+
+    //         }catch(err){
+    //             alert("Login failed. Try again.");
+    //             console.error("Login error:", err);
+    //         }
+    //     }
+    //     else{
+    //         alert("You Entered Wrong Credentials. Please Try Again !!")
+    //     }
+
+    //     authDispatch({
+    //         type:"CLEAR_USER_DATA"
+    //     })
+
+        if (isNumberValid && isPasswordValid) {
+            try {
+            const { accessToken, username } = await loginHandler(number, password, setAlert, authDispatch);
+            console.log(accessToken, username);
+
+            // Set credentials first
+            authDispatch({ type: "SET_ACCESS_TOKEN", payload: accessToken });
+            authDispatch({ type: "SET_USERNAME", payload: username });
+
+            // Then close the modal
+            authDispatch({ type: "CLOSE_AUTH_MODAL" });
+
+            // Clear only form fields
+            authDispatch({ type: "CLEAR_USER_DATA" });
+
+            } catch (err) {
+            alert("Login failed. Try again.");
+            console.error("Login error:", err);
             }
+        } else {
+            alert("You Entered Wrong Credentials. Please Try Again !!");
         }
-        else{
-            alert("You Entered Wrong Credentials. Please Try Again !!")
-        }
-
-        authDispatch({
-            type:"CLEAR_USER_DATA"
-        })
     }
 
     const handleTestCredentialsClick= async()=>{
