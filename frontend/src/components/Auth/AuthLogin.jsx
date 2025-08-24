@@ -55,18 +55,22 @@ const AuthLogin=()=>{
                 const {accessToken, username} = await loginHandler(number, password, setAlert, authDispatch);
                 console.log(accessToken, username);
                 
-                authDispatch({
-                    type:"SET_ACCESS_TOKEN",
-                    payload: accessToken
-                })
-                authDispatch({
-                    type:"SET_USERNAME",
-                    payload: username
-                })
+                // authDispatch({
+                //     type:"SET_ACCESS_TOKEN",
+                //     payload: accessToken
+                // })
+                // authDispatch({
+                //     type:"SET_USERNAME",
+                //     payload: username
+                // })
 
-                authDispatch({
-                    type: "SHOW_AUTH_MODAL"
-                })
+                // authDispatch({
+                //     type: "SHOW_AUTH_MODAL"
+                // })
+
+                
+                // Modal now closes explicitly after state updates
+                authDispatch({ type: "CLOSE_AUTH_MODAL" });
 
             }catch(err){
                 alert("Login failed. Try again.");
@@ -83,7 +87,7 @@ const AuthLogin=()=>{
     }
 
     const handleTestCredentialsClick= async()=>{
-        const {accessToken, username} = await loginHandler(8987678901, "Qwe@1234", setAlert);
+        const {accessToken, username} = await loginHandler(8987678901, "Qwe@1234", setAlert, authDispatch);
         
         authDispatch({
             type:"SET_ACCESS_TOKEN",

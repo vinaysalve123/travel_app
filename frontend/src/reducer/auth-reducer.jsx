@@ -75,6 +75,12 @@ const authReducer=(state, {type, payload})=>{
                 accessToken: "",
                 name: ""
             }
+
+        case "CLOSE_AUTH_MODAL":
+            return { 
+                ...state, 
+                isAuthModalOpen: false 
+            }
             
             default:
                 return state
