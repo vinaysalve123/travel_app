@@ -52,7 +52,7 @@ const AuthLogin=()=>{
 
         if(isNumberValid && isPasswordValid){
             try{
-                const {accessToken, username} = await loginHandler(number, password, setAlert);
+                const {accessToken, username} = await loginHandler(number, password, setAlert, authDispatch);
                 console.log(accessToken, username);
                 
                 authDispatch({
