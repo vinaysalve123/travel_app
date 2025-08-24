@@ -1,4 +1,5 @@
 
+import { useAlert } from "../../context/alert-context";
 import { useAuth } from "../../context/auth-context";
 import loginHandler from "../../services/login-service";
 import validateNumber from "../../utils/number-regex";
@@ -10,6 +11,7 @@ let isNumberValid, isPasswordValid;
 const AuthLogin=()=>{
 
     const {number, password, authDispatch} = useAuth();
+    const {setAlert} = useAlert();
 
     const handleNumberChange = (event) => {
         let value = event.target.value;
@@ -50,7 +52,7 @@ const AuthLogin=()=>{
 
         if(isNumberValid && isPasswordValid){
             try{
-                const {accessToken, username} = await loginHandler(number, password);
+                const {accessToken, username} = await loginHandler(number, password, setAlert);
                 console.log(accessToken, username);
                 
                 authDispatch({
@@ -80,6 +82,25 @@ const AuthLogin=()=>{
         })
     }
 
+    const handleTestCredentialsClick= async()=>{
+        const {accessToken, username} = await loginHandler(8987678901, "Qwe@1234", setAlert);
+        
+        authDispatch({
+            type:"SET_ACCESS_TOKEN",
+            payload: accessToken
+        })
+        authDispatch({
+            type:"SET_USERNAME",
+            payload: username
+        })
+        authDispatch({
+            type:"CLEAR_USER_DATA"
+        })
+        authDispatch({
+                type: "SHOW_AUTH_MODAL"
+            })
+    }
+
     return(
         <div className="auth-container">
             <form onSubmit={handleFormSubmit}>
@@ -105,7 +126,7 @@ const AuthLogin=()=>{
             </form>
 
             <div className="cta">
-                <button className="button btn-outline-primary cursor-pointer">
+                <button onClick={handleTestCredentialsClick} className="button btn-outline-primary cursor-pointer">
                     Login with Test Credentials
                 </button>
             </div>

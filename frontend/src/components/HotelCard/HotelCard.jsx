@@ -4,14 +4,15 @@ import {useNavigate} from "react-router-dom";
 import { useWishlist } from '../../context/wishlist-context';
 import findHotelInWishlist from '../../utils/find-hotel-in-wishlist';
 import { useAuth } from '../../context/auth-context';
+import { useAlert } from '../../context/alert-context';
 
 const HotelCard = ({hotel}) => {
 
     const {_id, name, image, address, state, rating, price} = hotel;
     const {wishlist, wishlistDispatch} = useWishlist();
-
+    const { setAlert } = useAlert();
     const {accessToken, authDispatch} = useAuth();
-    console.log(accessToken);
+    // console.log(accessToken);
 
     const navigate = useNavigate();
     const handleHotelCardClick=()=>{
@@ -21,26 +22,32 @@ const HotelCard = ({hotel}) => {
 
     const isHotelInWishlist = findHotelInWishlist(wishlist, _id);
     const handleWishlistClick=()=>{
-        if(accessToken){
-            if(!isHotelInWishlist){
-                wishlistDispatch({
-                    type: "ADD_TO_WISHLIST",
-                    payload: hotel
-                })
-                navigate("/wishlist");
-            }
-            else{
-                wishlistDispatch({
-                    type: "REMOVE_FROM_WISHLIST",
-                    payload: _id
-                })
-            }
-        }
-        else{
-            // alert("You are not logged In !!");
-            authDispatch({
-                type: "SHOW_AUTH_MODAL"
+        if (accessToken) {
+        if (!isHotelInWishlist) {
+            wishlistDispatch({
+                type: "ADD_TO_WISHLIST",
+                payload: hotel,
+            });
+            setAlert({
+                open: true,
+                message: `Hotel:: ${name} added to wishlist`,
+                type: "success"
             })
+        } else {
+            wishlistDispatch({
+                type: "REMOVE_FROM_WISHLIST",
+                payload: _id,
+            });
+            setAlert({
+                open: true,
+                message: `Hotel:: ${name} removed from wishlist`,
+                type: "success"
+            })
+        }
+        } else {
+            authDispatch({
+                type: "SHOW_AUTH_MODAL",
+            });
         }
         
     }
@@ -62,7 +69,7 @@ const HotelCard = ({hotel}) => {
                 <p className="hotel-name">{name}</p>
                 <p className="price-details d-flex align-center">
                     <span className="price">Rs. {price}</span>
-                    <span>Night</span>
+                    <span>night</span>
                 </p>
             </div>
             

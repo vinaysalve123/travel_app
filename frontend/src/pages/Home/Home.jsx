@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar';
 import HotelCard from '../../components/HotelCard/HotelCard';
 import "./Home.css"
@@ -17,6 +17,9 @@ import getHotelsByRatings from '../../utils/rating';
 import getHotelsByCancellation from '../../utils/hotel-cancellable';
 import { useAuth } from '../../context/auth-context';
 import AuthModal from '../../components/AuthModal/AuthModal';
+import { useAlert } from '../../context/alert-context';
+import ProfileDropDown from '../../components/ProfileDropDown/ProfileDropDown';
+import Alert from '../../components/Alert/Alert';
 
 const Home = () => {
 
@@ -28,7 +31,8 @@ const Home = () => {
   const {hotelCategory} = useCategory();
   const {isSearchModalOpen} = useDate();
   const {isFilterModalOpen, priceRange, noOfBathrooms, noOfBedrooms, noOfBeds, propertyType, travelOpRating, isCancellable} = useFilter();
-  const {isAuthModalOpen} = useAuth();
+  const {isAuthModalOpen, isDropDownModalOpen} = useAuth();
+  const {alert} = useAlert();
 
   useEffect(()=>{
     (async()=>{
@@ -68,9 +72,8 @@ const Home = () => {
 
   return (
     <div className='relative'>
-      <Navbar />
-      <Categories />
-      
+      <Navbar route="home"/>
+      <Categories />   
       {
         hotels && hotels.length>0 ? (
           <InfiniteScroll 
@@ -91,6 +94,9 @@ const Home = () => {
         (<></>)
       }
       {
+        isDropDownModalOpen && <ProfileDropDown />
+      }
+      {
         isSearchModalOpen && <SearchStayWithDate />
       }
       {
@@ -98,6 +104,9 @@ const Home = () => {
       }
       {
         isAuthModalOpen && <AuthModal />
+      }
+      {
+        alert.open && <Alert />
       }
     </div>
   )

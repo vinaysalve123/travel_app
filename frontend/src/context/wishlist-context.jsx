@@ -1,14 +1,19 @@
-import { createContext, useContext, useReducer } from "react"
+import { createContext, useContext, useEffect, useReducer } from "react"
 import wishlistReducer from "../reducer/wishlist-reducer";
 
 const initialValue = {
-    wishlist: []
+    wishlist: JSON.parse(localStorage.getItem("wishlist")) || []
 }
 
 const WishlistContext = createContext(initialValue);
 
 const WishlistProvider = ({children})=>{
     const [{wishlist}, wishlistDispatch] = useReducer(wishlistReducer, initialValue);
+
+    // 🔒 Save to localStorage on wishlist change
+    useEffect(() => {
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    }, [wishlist]);
 
     return(
         <WishlistContext.Provider value={{wishlist, wishlistDispatch}}>

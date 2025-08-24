@@ -77,7 +77,7 @@ const Categories=()=>{
                 }
                 
                 {
-                    categories && categories.map(({category}, idx) => <span className={`${category === hotelCategory ? "border-bottom b" : "b"}`} key={idx} onClick={()=>handleCategoryClick(category)}>{category}</span>)
+                    categories && categories.map(({category}, idx) => <span className={`category ${category === hotelCategory ? "border-bottom b" : "b"}`} key={idx} onClick={()=>handleCategoryClick(category)}>{category}</span>)
                 }
 
                 {

@@ -63,6 +63,19 @@ const authReducer=(state, {type, payload})=>{
                 password: "",
                 confirmPassword: "",
             }
+
+        case "SHOW_DROP_DOWN_OPTIONS":
+            return {
+                ...state,
+                isDropDownModalOpen: !state.isDropDownModalOpen
+            }
+        case "CLEAR_CREDENTIALS":
+            return {
+                ...state,
+                accessToken: "",
+                name: ""
+            }
+            
             default:
                 return state
     }

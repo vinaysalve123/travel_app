@@ -19,7 +19,7 @@ const FreeCancel=()=>{
             <div className="d-flex align-center gap-larger">
                 <span className="filter-label">Free Cancellation</span>
                 <label className="slide">
-                    <input type="checkbox" value={isCancellable} onChange={handleCancelChange}/>
+                    <input type="checkbox" checked={isCancellable} value={isCancellable} onChange={handleCancelChange}/>
                     <span className="slider round"></span>
                 </label>
             </div>

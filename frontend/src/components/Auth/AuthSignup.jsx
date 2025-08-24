@@ -1,3 +1,4 @@
+import { useAlert } from "../../context/alert-context";
 import { useAuth } from "../../context/auth-context";
 import signupHandler from "../../services/signup-service";
 import validateEmail from "../../utils/email-regex";
@@ -11,6 +12,7 @@ let isNumberValid, isNameValid, isEmailValid, isPasswordValid, isConfirmPassword
 const AuthSignup=()=>{
 
     const { username, number, email, password, confirmPassword, authDispatch} = useAuth();
+    const {setAlert} = useAlert();
 
     // const handleNumberChange=(event)=>{
     //     const isNumberValid = validateNumber(event.target.value);
@@ -125,10 +127,13 @@ const AuthSignup=()=>{
 
     const handleFormSubmit=(event)=>{
         event.preventDefault();
-        // console.log("clicked !!");
-        console.log({isNumberValid, isNameValid, isEmailValid, isPasswordValid, isConfirmPasswordValid});
+
+        // console.log({isNumberValid, isNameValid, isEmailValid, isPasswordValid, isConfirmPasswordValid});
         if(isNumberValid && isNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid &&(passwordValid === confirmPasswordValid)){
-            signupHandler(username, number, email, password);
+            signupHandler(username, number, email, password, setAlert);
+            authDispatch({
+                type: "SET_TO_LOGIN"
+            })
         }
         else{
             alert("You Entered Invalid Entries. Please try again !!");

@@ -4,12 +4,15 @@ import { useDate } from "../../context/date-context"
 import HotelCard from "../../components/HotelCard/HotelCard";
 import axios from "axios";
 import { useCategory } from "../../context/category-context";
+import { useAlert } from "../../context/alert-context";
+import Alert from "../../components/Alert/Alert";
 
 const SearhResults = ()=>{
 
     const {destination} = useDate();
     const {hotelCategory} = useCategory();
     const [hotels, setHotels] = useState([]);
+    const {alert} = useAlert();
 
     useEffect(()=>{
         (async()=>{
@@ -22,7 +25,7 @@ const SearhResults = ()=>{
                 console.log(err);
             }
         })()
-    },[destination])
+    },[destination, hotelCategory])
 
     const filteredSearchResults = hotels.filter(({address, city, state, country})=>
         address.toLowerCase() === (destination.toLowerCase()) ||
@@ -40,9 +43,12 @@ const SearhResults = ()=>{
                     filteredSearchResults ?
                         filteredSearchResults.map((hotel)=> <HotelCard key={hotel._id} hotel={hotel} />)
                     :
-                        <h3>Nothing Found !!</h3>
+                        (<h3>Nothing Found !!</h3>)
                 }
             </section>
+            {
+                alert.open && <Alert />
+            }
         </>
     )
 }

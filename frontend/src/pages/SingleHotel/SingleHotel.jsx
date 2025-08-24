@@ -6,12 +6,23 @@ import HotelImages from "../../components/HotelImages/HotelImages";
 import HotelDetails from "../../components/HotelDetails/HotelDetails";
 import "./SingleHotel.css"
 import  FinalPrice  from "../../components/FinalPrice/FinalPrice";
+import { useAuth } from "../../context/auth-context";
+import { useDate } from "../../context/date-context";
+import { useAlert } from "../../context/alert-context";
+import Alert from "../../components/Alert/Alert";
+import SearchStayWithDate from "../../components/SearchStayWithDate/SearchStayWithDate";
+import ProfileDropDown from "../../components/ProfileDropDown/ProfileDropDown";
+import AuthModal from "../../components/AuthModal/AuthModal";
 
 const SingleHotel = ()=>{
     
     const {id} = useParams(); //Object containing the parameters passed in url. Ex: name, address, id
     // console.log(id);
     const [singleHotel, setSingleHotel] = useState({});
+
+    const { isAuthModalOpen, isDropDownModalOpen } = useAuth();
+    const { isSearchModalOpen } = useDate();
+    const { alert } = useAlert();
 
     useEffect(()=>{
         (async()=>{
@@ -28,21 +39,23 @@ const SingleHotel = ()=>{
     const {name, state} = singleHotel;
     
     return (
-        <>
-            {/* <h1>Single Hotel Page !!</h1> */}
+        <div className="relative">
             <Navbar />
             <main className="single-hotel-page">
                 <p className="hotel-name-add">
-                    {name}, {state}       
+                {name}, {state}
                 </p>
                 <HotelImages singleHotel={singleHotel} />
-
-                <div className="d-flex align-center">
-                    <HotelDetails singleHotel={singleHotel}/>
-                    <FinalPrice singleHotel={singleHotel} />
+                <div className="d-flex">
+                <HotelDetails singleHotel={singleHotel} />
+                <FinalPrice singleHotel={singleHotel} />
                 </div>
             </main>
-        </>
+            {isSearchModalOpen && <SearchStayWithDate />}
+            {isDropDownModalOpen && <ProfileDropDown />}
+            {isAuthModalOpen && <AuthModal />}
+            {alert.open && <Alert />}
+        </div>
     )
 }
 

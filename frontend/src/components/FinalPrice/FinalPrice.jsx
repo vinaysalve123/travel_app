@@ -1,20 +1,21 @@
+import { useAlert } from "../../context/alert-context";
+import { useAuth } from "../../context/auth-context";
 import { useDate } from "../../context/date-context";
 import DateSelector from "../DateSelector/DateSelector";
 import "./FinalPrice.css";
-// import { useDate, useAuth, useAlert } from "../../context";
 
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const FinalPrice = ({ singleHotel }) => {
   const { _id, price, rating } = singleHotel;
 
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { guests, dateDispatch, checkInDate, checkOutDate } = useDate();
 
-//   const { setAlert } = useAlert();
+  const { setAlert } = useAlert();
 
-//   const { accessToken, authDispatch } = useAuth();
+  const { accessToken, authDispatch } = useAuth();
 
   const handleGuestChange = (event) => { 
     dateDispatch({
@@ -23,33 +24,33 @@ const FinalPrice = ({ singleHotel }) => {
     });
   };
 
-//   const handleReserveClick = () => {
-//     if (!checkInDate) {
-//       setAlert({
-//         open: true,
-//         message: "Select a Check-in Date",
-//         type: "info"
-//       })
-//     } else if (!checkOutDate) {
-//       setAlert({
-//         open: true,
-//         message: "Select a Check-out Date",
-//         type: "info"
-//       })
-//     } else if (guests < 1) {
-//       setAlert({
-//         open: true,
-//         message: "Add number of guests",
-//         type: "info"
-//       })
-//     } else if (accessToken) {
-//       navigate(`/confirm-booking/stay/${_id}`);
-//     } else {
-//       authDispatch({
-//         type: "SHOW_AUTH_MODAL"
-//       })
-//     }
-//   };
+  const handleReserveClick = () => {
+    if (!checkInDate) {
+      setAlert({
+        open: true,
+        message: "Select a Check-in Date",
+        type: "info"
+      })
+    } else if (!checkOutDate) {
+      setAlert({
+        open: true,
+        message: "Select a Check-out Date",
+        type: "info"
+      })
+    } else if (guests < 1) {
+      setAlert({
+        open: true,
+        message: "Add number of guests",
+        type: "info"
+      })
+    } else if (accessToken) {
+      navigate(`/confirm-booking/stay/${_id}`);
+    } else {
+      authDispatch({
+        type: "SHOW_AUTH_MODAL"
+      })
+    }
+  };
 
   return (
     <div className="price-details-container d-flex direction-column gap shadow">
@@ -91,25 +92,25 @@ const FinalPrice = ({ singleHotel }) => {
       <div>
         <button
           className="button btn-reserve btn-primary cursor"
-          // onClick={handleReserveClick}
+          onClick={handleReserveClick}
         >
           Reserve
         </button>
       </div>
-      {/* <div className="price-distribution d-flex direction-column">
+      <div className="price-distribution d-flex direction-column">
         <div className="final-price d-flex align-center justify-space-between">
           <span className="span">Rs. {price} x 2 nights</span>
           <span className="span">Rd. {price * 2}</span>
         </div>
         <div className="final-price d-flex align-center justify-space-between">
           <span className="span">Service fee</span>
-          <span className="span">Rd. 200</span>
+          <span className="span">Rs. 200</span>
         </div>
         <div className="final-price d-flex align-center justify-space-between">
           <span className="span">Total</span>
           <span className="span">Rs. {price * 2 + 200}</span>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
